@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import { AiFillDelete } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CartItem from "../components/CartItem";
 import { useStateContext } from "../context/StateContext";
 
 const Cart = () => {
@@ -17,41 +17,30 @@ const Cart = () => {
     navigate("/success");
   };
 
+  const incresePrice = (price) => {
+    setTotal(total + price);
+  };
+  const decresePrice = (price) => {
+    setTotal(total - price);
+  };
+
   useEffect(() => {
-    setTotal(cart.reduce( (initial, current) => initial + current.price , 0 ))
-  }, [])
-  
+    setTotal(cart.reduce((initial, current) => initial + current.price, 0));
+  }, []);
+
   return (
     <>
       {cart.length > 0 ? (
         <div className="grid grid-cols-4">
           <div className="col-span-3 flex flex-col gap-5">
             {cart?.map((item) => (
-              <div key={item.id} className="flex items-center gap-4">
-                <img
-                  src={item?.image}
-                  className="h-32 border-2 rounded p-4"
-                  alt=""
-                />
-                <div className="">
-                  <h3>{item?.title}</h3>
-                  <p>${item?.price}</p>
-                  <p>{item?.qty}</p>
-                  <button
-                    onClick={() =>
-                      dispatch({ type: "REMOVE_FROM_CART", payload: item })
-                    }
-                  >
-                    <AiFillDelete className="text-danger text-2xl" />
-                  </button>
-                </div>
-              </div>
+              <CartItem key={item.id} item={item} incresePrice={incresePrice} decresePrice={decresePrice} />
             ))}
           </div>
           <div className="col-span-1">
             <div className="bg-gray-50 p-10 rounded shadow-lg">
               <h1 className="text-3xl text-info font-semibold">
-                Total Price - ${total}
+                Total Price - ${total.toFixed(2)}
               </h1>
               <button
                 onClick={checkoutHandler}
