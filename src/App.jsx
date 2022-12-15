@@ -4,7 +4,9 @@ import Navbar from './components/Navbar'
 import Cart from './pages/Cart'
 import ProductDetail from './pages/ProductDetail'
 import Products from './pages/Products'
+import Success from './pages/Success'
 import './styles.css'
+import 'animate.css';
 
 const App = () => {
   return (
@@ -13,6 +15,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Products />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/success' element={<Success />} />
         <Route path='/detail/:id' element={<ProductDetail />} />
       </Routes>
     </div>
